@@ -1,4 +1,4 @@
-﻿namespace GSC_Lr4
+namespace GSC_Lr4
 {
     partial class Form1
     {
@@ -110,4 +110,3 @@
         private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
-
