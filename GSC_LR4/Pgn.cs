@@ -32,16 +32,36 @@ namespace GSC_Lr4
         // Вместо него здесь должен быть свой метод закрашивания из л.р. № 2 !
         public void Fill(Graphics g, Pen DrawPen)
         {
-            Brush DrawBrush = new SolidBrush(DrawPen.Color);
+            float Ymin = VertexList.Min(p => p.Y);
+            float Ymax = VertexList.Max(p => p.Y);
 
-            int n = VertexList.Count() - 1;
-            Point[] PgVertex = new Point[VertexList.Count()]; // массив вершин
-            for (int i = 0; i <= n; i++)
+            for (float Y = Ymin; Y <= Ymax; Y++)
             {
-                PgVertex[i].X = (int)Math.Round(VertexList[i].X);
-                PgVertex[i].Y = (int)Math.Round(VertexList[i].Y);
+                List<int> Xb = new List<int>();
+
+                for (int i = 0; i < VertexList.Count; i++)
+                {
+                    int k = (i < VertexList.Count - 1) ? i + 1 : 0;
+
+                    float yi = VertexList[i].Y;
+                    float yk = VertexList[k].Y;
+
+                    if ((yi < Y && yk >= Y) || (yi >= Y && yk < Y))
+                    {
+                        double x = VertexList[i].X + (double)(Y - yi) / (yk - yi) * (VertexList[k].X - VertexList[i].X);
+                        Xb.Add((int)Math.Round(x));
+                    }
+                }
+
+                Xb.Sort();
+
+                for (int j = 0; j < Xb.Count; j += 2)
+                {
+                    int xl = Xb[j];
+                    int xr = Xb[j + 1];
+                    g.DrawLine(DrawPen, xl, Y, xr, Y);
+                }
             }
-            g.FillPolygon(DrawBrush, PgVertex);
         }
 
         // выделение многоугольника
