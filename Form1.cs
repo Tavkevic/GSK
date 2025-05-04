@@ -15,9 +15,11 @@ namespace Lab_2_Polygons
         Graphics g;
         Pen DrawPen = new Pen(Color.Black, 1);
         List<Point> VertexList = new List<Point>(); // Список точек для фигуры
+        List<Point> VertexListB = new List<Point>();
         bool isDrawing = false;
+        Pen dashedPen = new Pen(Color.Yellow, 2);
 
-        public Form1()
+    public Form1()
         {
             InitializeComponent();
             g = pictureBox.CreateGraphics(); // Инициализация графики
@@ -59,16 +61,23 @@ namespace Lab_2_Polygons
         {
             if (e.Button == MouseButtons.Left)
             {
-                Draw(e);
+                Drawbefore(e);
+
             }
+
+
+
+
             else if (e.Button == MouseButtons.Right && isDrawing)
             {
                 if (VertexList.Count == 1)
                 {
                     Draw(e);
                 }
-                else if (VertexList.Count == 2)
+                else if (VertexList.Count > 1)
                 {
+
+                    
                     // Добавляем третью точку
                     VertexList.Add(new Point(e.X, e.Y));
 
@@ -76,10 +85,10 @@ namespace Lab_2_Polygons
                     g.DrawEllipse(DrawPen, e.X - 2, e.Y - 2, 2, 2);
 
                     // Рисуем линию между второй и третьей точками
-                    g.DrawLine(DrawPen, VertexList[1], VertexList[2]);
+                    g.DrawLine(dashedPen, VertexList[1], VertexList[2]);
 
                     // Замыкаем фигуру, соединяя третью точку с первой
-                    g.DrawLine(DrawPen, VertexList[2], VertexList[0]);
+                    g.DrawLine(dashedPen, VertexList[2], VertexList[0]);
 
                     if (fillStyleComboBox.SelectedIndex == 0)
                     {
@@ -113,6 +122,37 @@ namespace Lab_2_Polygons
             }
         }
 
+        private void Drawbefore(MouseEventArgs e)
+        {
+            VertexListB.Add(new Point(e.X, e.Y));
+
+            dashedPen.DashPattern = new float[] { 10, 5 };
+            
+            g.DrawEllipse(DrawPen, e.X - 2, e.Y - 2, 2, 2);
+
+            if (VertexListB.Count == 2)
+            {
+                Point p1 = VertexListB[0];
+                Point p2 = new Point(VertexListB[0].X, VertexListB[1].Y + (VertexListB[0].Y - VertexListB[1].Y)/2);
+                Point p3 = new Point(VertexListB[0].X + (VertexListB[1].X - VertexListB[0].X) / 4, VertexListB[1].Y + (VertexListB[0].Y - VertexListB[1].Y) / 2);
+                Point p4 = new Point(VertexListB[0].X + (VertexListB[1].X - VertexListB[0].X) / 2, VertexListB[1].Y);
+                Point p5 = new Point(VertexListB[0].X + 3 * (VertexListB[1].X - VertexListB[0].X) / 4, VertexListB[1].Y + (VertexListB[0].Y - VertexListB[1].Y) / 2);
+                Point p6 = new Point(VertexListB[1].X, VertexListB[1].Y + (VertexListB[0].Y - VertexListB[1].Y) / 2);
+                Point p7 = new Point(VertexListB[1].X, VertexListB[0].Y);
+
+
+                
+                g.DrawLine(dashedPen, p1, p2);
+                g.DrawLine(dashedPen, p2, p3);
+                g.DrawLine(dashedPen, p3, p4);
+                g.DrawLine(dashedPen, p4, p5);
+                g.DrawLine(dashedPen, p5, p6);
+                g.DrawLine(dashedPen, p6, p7);
+                g.DrawLine(dashedPen, p7, p1);
+            }
+
+        }
+
         private void Draw(MouseEventArgs e)
         {
             // Добавляем новую вершину в список
@@ -122,7 +162,7 @@ namespace Lab_2_Polygons
             g.DrawEllipse(DrawPen, e.X - 2, e.Y - 2, 2, 2);
 
             // Если вершин больше одной, рисуем линию между последней и предпоследней вершинами
-            if (VertexList.Count > 1)
+            if (VertexList.Count == 2)
             {
                 g.DrawLine(DrawPen, VertexList[VertexList.Count - 2], VertexList[VertexList.Count - 1]);
             }
