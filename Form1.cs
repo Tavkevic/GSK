@@ -59,16 +59,39 @@ namespace Lab_2_Polygons
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
-            {
-                Drawbefore(e);
+            VertexListB.Add(new Point(e.X, e.Y));
 
+            if (fillStyleComboBox.SelectedIndex != 2) 
+            { 
+                if (e.Button == MouseButtons.Left)
+                {
+                    Drawbefore(e);
+
+                } 
+            }
+            else
+            {
+                if (e.Button == MouseButtons.Right) // Конец ввода 
+                {
+                    g.DrawLine(new Pen(Color.Magenta, 1), VertexListB[VertexListB.Count - 2], VertexListB[VertexListB.Count - 1]);
+                    DrawBezie(new Pen(DrawPen.Color, 1), VertexListB);
+                }
+                else
+                {
+                    if (VertexListB.Count > 1)
+                    {
+                        g.DrawLine(new Pen(Color.Magenta, 1), VertexListB[VertexListB.Count - 2], VertexListB[VertexListB.Count - 1]);
+                    }
+                }
             }
 
+            
 
 
 
-            else if (e.Button == MouseButtons.Right && isDrawing)
+
+
+            //else if (e.Button == MouseButtons.Right && isDrawing)
             {
                 if (VertexList.Count == 1)
                 {
@@ -112,7 +135,7 @@ namespace Lab_2_Polygons
 
         private void Drawbefore(MouseEventArgs e)
         {
-            VertexListB.Add(new Point(e.X, e.Y));
+            
 
             dashedPen.DashPattern = new float[] { 10, 5 };
             
@@ -128,8 +151,6 @@ namespace Lab_2_Polygons
                     Point p5 = new Point(VertexListB[0].X + 3 * (VertexListB[1].X - VertexListB[0].X) / 4, VertexListB[1].Y + (VertexListB[0].Y - VertexListB[1].Y) / 2);
                     Point p6 = new Point(VertexListB[1].X, VertexListB[1].Y + (VertexListB[0].Y - VertexListB[1].Y) / 2);
                     Point p7 = new Point(VertexListB[1].X, VertexListB[0].Y);
-
-
 
                     g.DrawLine(dashedPen, p1, p2);
                     g.DrawLine(dashedPen, p2, p3);
@@ -158,8 +179,57 @@ namespace Lab_2_Polygons
                     g.DrawLine(dashedPen, p5, p6);
                     g.DrawLine(dashedPen, p6, p1);
                 }
+            } 
+        }
+
+        public void DrawBezie(Pen DrPen, List<Point> P)
+        {
+            if (P.Count < 2) return;
+
+            const double dt = 0.01;
+            double t = 0;
+            Point Ppred = P[0], Pt = P[0];
+            int m = P.Count - 1;
+
+            // Предварительно вычисляем биномиальные коэффициенты
+            double[] binom = new double[P.Count];
+            for (int i = 0; i < P.Count; i++)
+            {
+                binom[i] = Factorial(m) / (Factorial(i) * Factorial(m - i));
             }
 
+            while (t < 1 + dt / 2)
+            {
+                double xt = 0, yt = 0;
+
+                for (int i = 0; i < P.Count; i++)
+                {
+                    double J = binom[i] * Math.Pow(t, i) * Math.Pow(1 - t, m - i);
+                    xt += P[i].X * J;
+                    yt += P[i].Y * J;
+                }
+
+                Pt.X = (int)Math.Round(xt);
+                Pt.Y = (int)Math.Round(yt);
+
+                g.DrawLine(DrPen, Ppred, Pt);
+                Ppred = Pt;
+                t += dt;
+            }
+        }
+
+        // Функция для вычисления факториала
+        static double Factorial(int n)
+        {
+            if (n < 0) return 0;
+            if (n == 0) return 1;
+
+            double result = 1;
+            for (int i = 1; i <= n; i++)
+            {
+                result *= i;
+            }
+            return result;
         }
 
         private void Draw(MouseEventArgs e)
