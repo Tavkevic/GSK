@@ -117,26 +117,47 @@ namespace Lab_2_Polygons
             dashedPen.DashPattern = new float[] { 10, 5 };
             
             g.DrawEllipse(DrawPen, e.X - 2, e.Y - 2, 2, 2);
-
-            if (VertexListB.Count == 2)
+            if (fillStyleComboBox.SelectedIndex == 0)
             {
-                Point p1 = VertexListB[0];
-                Point p2 = new Point(VertexListB[0].X, VertexListB[1].Y + (VertexListB[0].Y - VertexListB[1].Y)/2);
-                Point p3 = new Point(VertexListB[0].X + (VertexListB[1].X - VertexListB[0].X) / 4, VertexListB[1].Y + (VertexListB[0].Y - VertexListB[1].Y) / 2);
-                Point p4 = new Point(VertexListB[0].X + (VertexListB[1].X - VertexListB[0].X) / 2, VertexListB[1].Y);
-                Point p5 = new Point(VertexListB[0].X + 3 * (VertexListB[1].X - VertexListB[0].X) / 4, VertexListB[1].Y + (VertexListB[0].Y - VertexListB[1].Y) / 2);
-                Point p6 = new Point(VertexListB[1].X, VertexListB[1].Y + (VertexListB[0].Y - VertexListB[1].Y) / 2);
-                Point p7 = new Point(VertexListB[1].X, VertexListB[0].Y);
+                if (VertexListB.Count == 2)
+                {
+                    Point p1 = VertexListB[0];
+                    Point p2 = new Point(VertexListB[0].X, VertexListB[1].Y + (VertexListB[0].Y - VertexListB[1].Y) / 2);
+                    Point p3 = new Point(VertexListB[0].X + (VertexListB[1].X - VertexListB[0].X) / 4, VertexListB[1].Y + (VertexListB[0].Y - VertexListB[1].Y) / 2);
+                    Point p4 = new Point(VertexListB[0].X + (VertexListB[1].X - VertexListB[0].X) / 2, VertexListB[1].Y);
+                    Point p5 = new Point(VertexListB[0].X + 3 * (VertexListB[1].X - VertexListB[0].X) / 4, VertexListB[1].Y + (VertexListB[0].Y - VertexListB[1].Y) / 2);
+                    Point p6 = new Point(VertexListB[1].X, VertexListB[1].Y + (VertexListB[0].Y - VertexListB[1].Y) / 2);
+                    Point p7 = new Point(VertexListB[1].X, VertexListB[0].Y);
 
 
-                
-                g.DrawLine(dashedPen, p1, p2);
-                g.DrawLine(dashedPen, p2, p3);
-                g.DrawLine(dashedPen, p3, p4);
-                g.DrawLine(dashedPen, p4, p5);
-                g.DrawLine(dashedPen, p5, p6);
-                g.DrawLine(dashedPen, p6, p7);
-                g.DrawLine(dashedPen, p7, p1);
+
+                    g.DrawLine(dashedPen, p1, p2);
+                    g.DrawLine(dashedPen, p2, p3);
+                    g.DrawLine(dashedPen, p3, p4);
+                    g.DrawLine(dashedPen, p4, p5);
+                    g.DrawLine(dashedPen, p5, p6);
+                    g.DrawLine(dashedPen, p6, p7);
+                    g.DrawLine(dashedPen, p7, p1);
+                }
+            }
+            else if (fillStyleComboBox.SelectedIndex == 1)
+            {
+                if (VertexListB.Count == 2)
+                {
+                    Point p1 = VertexListB[0];//+
+                    Point p2 = new Point(VertexListB[0].X + (VertexListB[1].X - VertexListB[0].X) / 4, VertexListB[1].Y + (VertexListB[0].Y - VertexListB[1].Y) / 2);//+
+                    Point p3 = new Point(VertexListB[0].X + (VertexListB[1].X - VertexListB[0].X) / 4, VertexListB[1].Y);//+
+                    Point p4 = new Point(VertexListB[0].X + 3 * (VertexListB[1].X - VertexListB[0].X) / 4, VertexListB[1].Y);//+
+                    Point p5 = new Point(VertexListB[0].X + 3 * (VertexListB[1].X - VertexListB[0].X) / 4, VertexListB[1].Y + (VertexListB[0].Y - VertexListB[1].Y) / 2);//+
+                    Point p6 = new Point(VertexListB[1].X, VertexListB[0].Y);//+
+
+                    g.DrawLine(dashedPen, p1, p2);
+                    g.DrawLine(dashedPen, p2, p3);
+                    g.DrawLine(dashedPen, p3, p4);
+                    g.DrawLine(dashedPen, p4, p5);
+                    g.DrawLine(dashedPen, p5, p6);
+                    g.DrawLine(dashedPen, p6, p1);
+                }
             }
 
         }
