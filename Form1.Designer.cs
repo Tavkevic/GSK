@@ -45,7 +45,7 @@ namespace Lab_2_Polygons
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox.Location = new System.Drawing.Point(168, 15);
+            this.pictureBox.Location = new System.Drawing.Point(171, 38);
             this.pictureBox.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox.Name = "pictureBox";
             this.pictureBox.Size = new System.Drawing.Size(891, 548);
@@ -75,8 +75,9 @@ namespace Lab_2_Polygons
             this.fillStyleComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.fillStyleComboBox.FormattingEnabled = true;
             this.fillStyleComboBox.Items.AddRange(new object[] {
-            "Неориентированный",
-            "Ориентированный"});
+            "Fg1",
+            "Fg2",
+            "BZ"});
             this.fillStyleComboBox.Location = new System.Drawing.Point(3, 38);
             this.fillStyleComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.fillStyleComboBox.Name = "fillStyleComboBox";
@@ -96,12 +97,12 @@ namespace Lab_2_Polygons
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 18);
+            this.label1.Location = new System.Drawing.Point(0, 18);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(142, 16);
+            this.label1.Size = new System.Drawing.Size(179, 16);
             this.label1.TabIndex = 5;
-            this.label1.Text = "Тип многоугольника";
+            this.label1.Text = "Выбор фигуры или кривой";
             // 
             // label2
             // 
