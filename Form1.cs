@@ -166,6 +166,7 @@ namespace Lab_2_Polygons
 
             // Очищаем список вершин
             VertexList.Clear();
+            VertexListB.Clear();
 
             // Сбрасываем флаг рисования
             isDrawing = false;
